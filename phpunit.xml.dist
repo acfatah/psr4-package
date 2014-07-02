@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit 
+    bootstrap="tests/bootstrap.php" 
+    colors="false"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    stopOnFailure="false"
+    strict="true"
+    verbose="true">
+    
+    <testsuites>
+        <testsuite name="{{PROJECT_NAME}} Testsuite">
+            <directory>tests/</directory>
+        </testsuite>
+    </testsuites>
+    
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/</directory>
+            <exclude>
+                <directory suffix="Exception.php">src/</directory>
+                <directory suffix="Interface.php">src/</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    
+    <selenium>
+        <browser name="Firefox" browser="*firefox" />
+        <browser name="Internet Explorer" browser="*iexplore" />
+    </selenium>
+    
+</phpunit>

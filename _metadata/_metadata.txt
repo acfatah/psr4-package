@@ -1,0 +1,11 @@
+{{PROJECT_NAME}}
+{{VENDOR_PACKAGE}}      # composer.json "vendor/package"
+{{DESCRIPTION}}
+{{KEYWORDS}}
+{{DATE}}                # "Y.m.d"
+{{AUTHOR}}
+{{EMAIL}}
+{{HOMEPAGE}}
+{{AUTOLOAD-PSR4}}       # "Vendor\\Package\\"
+{{NAMESPACE}}           # "Vendor\Package"
+{{COPYRIGHT}}
