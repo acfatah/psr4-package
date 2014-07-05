@@ -5,15 +5,15 @@
  * For full copyright and license information, please see the LICENSE file.
  * Redistributions of files must retain the above copyright notice.
  * 
- * @copyright (c) 2014, Achmad F. Ibrahim
- * @link https://github.com/acfatah
+ * @copyright (c) 2014, {{COPYRIGHT}}
+ * @link {{HOMEPAGE}}
  * @license http://opensource.org/licenses/mit-license.php The MIT License (MIT)
  */
 
 /**
  * Phpunit bootstrap file
  * 
- * @author Achmad F. Ibrahim <acfatah@gmail.com>
+ * @author {{AUTHOR}} <{{EMAIL}}>
  */
 
 $basePath = realpath(__DIR__ . '/..');
