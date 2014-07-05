@@ -15,12 +15,12 @@
         "php": ">=5.4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.*@stable",
-        "phpunit/php-code-coverage": "2.*@stable",
-        "phpunit/phpunit-mock-objects": "2.*@stable",
-        "phpunit/phpunit-selenium": "1.*@stable",
-        "squizlabs/php_codesniffer": "1.*@stable",
-        "phpmd/phpmd": "2.*@stable"
+        "phpunit/phpunit": "~4.1",
+        "phpunit/php-code-coverage": "~2.1",
+        "phpunit/phpunit-mock-objects": "~2.1",
+        "phpunit/phpunit-selenium": "~1.3",
+        "squizlabs/php_codesniffer": "~1.5.3",
+        "phpmd/phpmd": "~2.0"
     },
     "suggest": {
         "phpunit/phpunit": "The PHP Unit Testing framework.",
