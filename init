@@ -126,3 +126,4 @@ print ' Modified ' . count($modified) . ' file(s):' . PHP_EOL;
 foreach($modified as $value) {
     print ' - ' . $value . PHP_EOL;
 }
+exit(0);
