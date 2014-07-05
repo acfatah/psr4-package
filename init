@@ -1,0 +1,128 @@
+#! /usr/bin/env php
+
+<?php
+/**
+ * PSR-4 Package initialization script.
+ *
+ * @author Achmad F. Ibrahim <acfatah@gmail.com>
+ * @version 0.1.0
+ * @package acfatah/psr4-package
+ */
+
+print <<<EOD
+PSR-4 Package initialization script. Version 0.1.0-dev\n
+
+This script will replace all the metadata keywords with the input value.
+Metadata keywords are:
+
+ {{PROJECT_NAME}}, {{VENDOR_PACKAGE}}, {{DESCRIPTION}}, {{KEYWORDS}},
+ {{AUTHOR}}, {{EMAIL}}, {{HOMEPAGE}}, {{AUTOLOAD-PSR4}}, {{NAMESPACE}},
+ {{COPYRIGHT}}, {{DATE}}
+
+
+EOD;
+print 'Press [ENTER] to continue or type "q" to quit: ';
+
+$handle = fopen('php://stdin', 'r');
+$input = strtolower(trim(fgets($handle)));
+strpos($input, 'q') === false or exit(1);
+print PHP_EOL;
+
+ini_set('memory_limit', '512M');
+
+$metadata = [
+    // 'keywords' => [ 'description', 'default']
+    '{{PROJECT_NAME}}' => [
+        '[REQUIRED] Project name. E.g, "Foo Project".',
+        ''
+    ],
+    '{{VENDOR_PACKAGE}}' => [
+        '[REQUIRED] Composer package name string. E.g, "acfatah/package".',
+        ''
+    ],
+    '{{DESCRIPTION}}' => [
+        'Project short description.', ''
+    ],
+    '{{KEYWORDS}}' => [
+"Composer comma separated package keywords quoted with (\"). E.g, \n" .
+'"psr-4", "library", "composer package"',
+        ''
+    ],
+    '{{AUTHOR}}' => [
+        'Author.',
+        'Achmad F. Ibrahim'
+    ],
+    '{{EMAIL}}' => [
+        'Email.',
+        'acfatah@gmail.com'
+    ],
+    '{{HOMEPAGE}}' => [
+        'Project homepage.',
+        'http://github.com/acfatah'
+    ],
+    '{{AUTOLOAD-PSR4}}' => [
+        'PSR-4 composer autoload string. E.g "Acfatah\\\\Package\\\\"',
+        ''
+    ],
+    '{{COPYRIGHT}}' => [
+        'Copyright holder.',
+        'Achmad F. Ibrahim'
+    ],
+    '{{DATE}}' => [
+        'Project date (Y-m-d).',
+        date('Y-m-d')
+    ]
+];
+
+$search = []; $replace = [];
+foreach ($metadata as $meta => $value) {
+    print $value[0] . " [{$value[1]}]:\n";
+    $search[] = $meta;
+    $input = trim(fgets($handle));
+    
+    if (empty($input) && strpos($value[0], '[REQUIRED]') !== false) {
+        print " ERROR! Required input cannot be empty.\n";
+        exit(1);
+    }
+    
+    $input
+        ? $replace[] = $input
+        : $replace[] = $value[1];
+}
+
+// iterate all folder
+$recursive = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__));
+$modified = [];
+foreach ($recursive as $iterator) {
+
+    if ($iterator->isDir()) {
+        continue;
+    }
+    
+    $file = $iterator->getRealPath();
+    
+    if ($file == __FILE__) {
+        continue;
+    }
+    
+    $content = file_get_contents($file);
+    
+    foreach ($metadata as $meta => $value) {
+        if (strpos($content, $meta) !== false) {
+            $modified[] = str_replace(
+                    __DIR__ . DIRECTORY_SEPARATOR,
+                    '',
+                    $iterator->getFileName()
+            );
+            $content = str_replace($search, $replace, $content);
+            file_put_contents($file, $content);
+            break;
+        }
+    }
+}
+
+print PHP_EOL;
+print ' Modified ' . count($modified) . ' file(s):' . PHP_EOL;
+foreach($modified as $value) {
+    print ' - ' . $value . PHP_EOL;
+}
