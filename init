@@ -60,6 +60,10 @@ $metadata = [
         'Project homepage.',
         'http://github.com/acfatah'
     ],
+    '{{NAMESPACE}}' => [
+        'Project namespace. E.g "Acfatah\Package"',
+        ''
+    ],
     '{{AUTOLOAD-PSR4}}' => [
         'PSR-4 composer autoload string. E.g "Acfatah\\\\Package\\\\"',
         ''
@@ -126,4 +130,12 @@ print ' Modified ' . count($modified) . ' file(s):' . PHP_EOL;
 foreach($modified as $value) {
     print ' - ' . $value . PHP_EOL;
 }
+
+// rename netbeans project folder
+print PHP_EOL;
+if (!rename('/_nbprojects', '/nbprojects')) {
+    print 'Unable to rename "_nbprojects" directory' . PHP_EOL;
+    exit(1);
+}
+
 exit(0);
