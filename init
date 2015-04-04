@@ -133,7 +133,7 @@ foreach($modified as $value) {
 
 // rename netbeans project folder
 print PHP_EOL;
-if (!rename('/_nbproject', '/nbproject')) {
+if (!rename(__DIR__ . '/_nbproject', __DIR__ . '/nbproject')) {
     print 'Unable to rename "_nbproject" directory' . PHP_EOL;
     exit(1);
 }
