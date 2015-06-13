@@ -10,7 +10,7 @@
  */
 
 print <<<EOD
-PSR-4 Package initialization script. Version 0.1.0-dev\n
+PSR-4 Package initialization script. Version 1.0.0-dev\n
 
 This script will replace all the metadata keywords with the input value.
 Metadata keywords are:
@@ -29,6 +29,8 @@ strpos($input, 'q') === false or exit(1);
 print PHP_EOL;
 
 ini_set('memory_limit', '512M');
+
+define('SOURCE_PATH', realpath(__DIR__ . '/..'));
 
 $metadata = [
     // 'keywords' => [ 'description', 'default']
@@ -78,24 +80,28 @@ $metadata = [
     ]
 ];
 
+// input value for each metadata
 $search = []; $replace = [];
 foreach ($metadata as $meta => $value) {
     print $value[0] . " [{$value[1]}]:\n";
     $search[] = $meta;
     $input = trim(fgets($handle));
     
-    if (empty($input) && strpos($value[0], '[REQUIRED]') !== false) {
+    if (empty($input) && false !== strpos($value[0], '[REQUIRED]')) {
         print " ERROR! Required input cannot be empty.\n";
         exit(1);
     }
     
-    $input
-        ? $replace[] = $input
-        : $replace[] = $value[1];
+    $replace[] = $input? $input: $value[1];
 }
 
-// iterate all folder
-$recursive = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__));
+
+// iterate all folders and replace metadata
+$recursive = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator(
+        SOURCE_PATH
+    )
+);
 $modified = [];
 foreach ($recursive as $iterator) {
 
@@ -112,9 +118,9 @@ foreach ($recursive as $iterator) {
     $content = file_get_contents($file);
     
     foreach ($metadata as $meta => $value) {
-        if (strpos($content, $meta) !== false) {
+        if (false !== strpos($content, $meta)) {
             $modified[] = str_replace(
-                    __DIR__ . DIRECTORY_SEPARATOR,
+                    SOURCE_PATH . DIRECTORY_SEPARATOR,
                     '',
                     $iterator->getFileName()
             );
@@ -128,14 +134,74 @@ foreach ($recursive as $iterator) {
 print PHP_EOL;
 print ' Modified ' . count($modified) . ' file(s):' . PHP_EOL;
 foreach($modified as $value) {
-    print ' - ' . $value . PHP_EOL;
+    print '  - ' . $value . PHP_EOL;
 }
+print PHP_EOL;
+
+$exitCode = 0;
+
+// remove composer.json file
+if (!unlink(SOURCE_PATH . DIRECTORY_SEPARATOR . 'composer.json')) {
+    print PHP_EOL;
+    print <<<EOD
+ Unable to remove "composer.json" file.
+
+ Please remove default "composer.json" and rename "_composer.json" to
+ "composer.json" manually.
+
+
+EOD;
+    $exitCode = 1;
+}
+
+// rename _composer.json
+if (!rename(
+    SOURCE_PATH . DIRECTORY_SEPARATOR . '_composer.json', 
+    SOURCE_PATH . DIRECTORY_SEPARATOR . 'composer.json')
+) {
+    print PHP_EOL;
+    print <<<EOD
+ Unable to rename "_composer.json" file to "composer.json". 
+ 
+ Please rename "_composer.json" file to "composer.json" manually.
+
+
+EOD;
+    $exitCode = 1;
+}
+
 
 // rename netbeans project folder
-print PHP_EOL;
-if (!rename(__DIR__ . '/_nbproject', __DIR__ . '/nbproject')) {
-    print 'Unable to rename "_nbproject" directory' . PHP_EOL;
-    exit(1);
+if (!rename(
+    SOURCE_PATH . DIRECTORY_SEPARATOR . '_nbproject', 
+    SOURCE_PATH . DIRECTORY_SEPARATOR . 'nbproject')
+) {
+    print PHP_EOL;
+    print <<<EOD
+ Unable to rename "_nbproject" directory to "nbproject". 
+ 
+ Please rename "_nbproject" directory to "nbproject" manually.
+
+
+EOD;
+    $exitCode = 1;
 }
 
-exit(0);
+// remove files
+print PHP_EOL;
+$junks = [
+    __DIR__ . DIRECTORY_SEPARATOR . 'init',
+    SOURCE_PATH . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . '.gitkeep',
+    SOURCE_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'Fixture' 
+        . DIRECTORY_SEPARATOR .  '.gitkeep',
+    SOURCE_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'unit' 
+        . DIRECTORY_SEPARATOR .  '.gitkeep'
+];
+foreach ($junks as $junk) {
+    if (!unlink($junk)) {
+        print sprintf(' Unable to remove "%s" file.', $junk) . PHP_EOL;
+        $exitCode = 1;
+    }
+}
+
+exit($exitCode);
