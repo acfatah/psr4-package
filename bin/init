@@ -77,6 +77,10 @@ $metadata = [
     '{{DATE}}' => [
         'Project date (Y-m-d).',
         date('Y-m-d')
+    ],
+    '{{YEAR}}' => [
+        'Year.',
+        date('Y')
     ]
 ];
 
