@@ -25,9 +25,4 @@
         </whitelist>
     </filter>
     
-    <selenium>
-        <browser name="Firefox" browser="*firefox" />
-        <browser name="Internet Explorer" browser="*iexplore" />
-    </selenium>
-    
 </phpunit>
