@@ -219,7 +219,7 @@ EOD;
             }
         }
         if (!$removable) {
-            print " Please remove the file(s) manually.";
+            print " Please remove the file(s) manually." . PHP_EOL;
             self::$exitCode = 1;
         }
         $installDir = SOURCE_PATH . DIRECTORY_SEPARATOR . 'install';
@@ -255,7 +255,7 @@ EOD;
             }
         }
         if (!$renameable) {
-            print " Please rename the file(s) manually.";
+            print " Please rename the file(s) manually." . PHP_EOL;
             self::$exitCode = 1;
         }
     }
