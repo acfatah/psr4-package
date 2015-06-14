@@ -14,7 +14,7 @@
     },
     "scripts": {
         "post-create-project-cmd" : [
-            "bin/init"
+            "php bin/init"
         ]
     }
 }
