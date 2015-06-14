@@ -1,21 +1,13 @@
-/**
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE file.
- * Redistributions of files must retain the above copyright notice.
- * 
- * @copyright (c) 2014, {{COPYRIGHT}}
- * @link {{HOMEPAGE}}
- * @license http://opensource.org/licenses/mit-license.php The MIT License (MIT)
- */
-
-namespace {{NAMESPACE}};
-
-/**
- * @todo PHPDoc
- *
- * @author {{AUTHOR}} <{{EMAIL}}>
- * @package {{NAMESPACE}}
- * @version 0.1.0
- */
- 
- 
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Licensed under The MIT License
+${licensePrefix}For full copyright and license information, please see the LICENSE file.
+${licensePrefix}Redistributions of files must retain the above copyright notice.
+${licensePrefix}
+${licensePrefix}@copyright (c) {{YEAR}}, {{COPYRIGHT}}
+${licensePrefix}@link {{HOMEPAGE}}
+${licensePrefix}@license http://opensource.org/licenses/mit-license.php The MIT License (MIT)
+<#if licenseLast??>
+${licenseLast}
+</#if>
