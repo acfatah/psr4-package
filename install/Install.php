@@ -56,11 +56,16 @@ class Install
                 ''
             ],
             '{{DESCRIPTION}}' => [
-                'Project short description.', ''
+                'Project short description.',
+                ''
+            ],
+            '{{PACKAGE_TYPE}}' => [
+                'Package type.',
+                'library'
             ],
             '{{KEYWORDS}}' => [
-        "Composer comma separated package keywords quoted with (\"). E.g, \n"
-        . '"psr-4", "library", "composer package"',
+                "Composer comma separated package keywords quoted with (\"). E.g, \n"
+                    . '"psr-4", "library", "composer package"',
                 ''
             ],
             '{{AUTHOR}}' => [
@@ -146,9 +151,9 @@ PSR-4 Package initialization script. Version 1.0.0-dev\n
 This script will replace all the metadata keywords with the input value.
 Metadata keywords are:
 
- {{PROJECT_NAME}}, {{VENDOR_PACKAGE}}, {{DESCRIPTION}}, {{KEYWORDS}},
- {{AUTHOR}}, {{EMAIL}}, {{HOMEPAGE}}, {{AUTOLOAD-PSR4}}, {{NAMESPACE}},
- {{COPYRIGHT}}, {{DATE}}
+ {{PROJECT_NAME}}, {{VENDOR_PACKAGE}}, {{DESCRIPTION}}, {{PACKAGE_TYPE}},
+ {{KEYWORDS}}, {{AUTHOR}}, {{EMAIL}}, {{HOMEPAGE}}, {{AUTOLOAD-PSR4}},
+ {{NAMESPACE}}, {{COPYRIGHT}}, {{DATE}}, {{YEAR}}
 
 Press [ENTER] to continue or type "q" to quit: 
 EOD;

@@ -1,6 +1,7 @@
 {
     "name": "{{VENDOR_PACKAGE}}",
     "description": "{{DESCRIPTION}}",
+    "type": "{{PACKAGE_TYPE}}",
     "keywords": [{{KEYWORDS}}],
     "license": "MIT",
     "authors": [
