@@ -90,12 +90,12 @@ foreach ($metadata as $meta => $value) {
     print $value[0] . " [{$value[1]}]:\n";
     $search[] = $meta;
     $input = trim(fgets($handle));
-    
+
     if (empty($input) && false !== strpos($value[0], '[REQUIRED]')) {
         print " ERROR! Required input cannot be empty.\n";
         exit(1);
     }
-    
+
     $replace[] = $input? $input: $value[1];
 }
 
@@ -112,15 +112,15 @@ foreach ($recursive as $iterator) {
     if ($iterator->isDir()) {
         continue;
     }
-    
+
     $file = $iterator->getRealPath();
-    
+
     if ($file == __FILE__) {
         continue;
     }
-    
+
     $content = file_get_contents($file);
-    
+
     foreach ($metadata as $meta => $value) {
         if (false !== strpos($content, $meta)) {
             $modified[] = str_replace(
@@ -160,13 +160,13 @@ EOD;
 
 // rename _composer.json
 if (!rename(
-    SOURCE_PATH . DIRECTORY_SEPARATOR . '_composer.json', 
+    SOURCE_PATH . DIRECTORY_SEPARATOR . '_composer.json',
     SOURCE_PATH . DIRECTORY_SEPARATOR . 'composer.json')
 ) {
     print PHP_EOL;
     print <<<EOD
- Unable to rename "_composer.json" file to "composer.json". 
- 
+ Unable to rename "_composer.json" file to "composer.json".
+
  Please rename "_composer.json" file to "composer.json" manually.
 
 
@@ -174,16 +174,45 @@ EOD;
     $exitCode = 1;
 }
 
+// remove README.md file
+if (!unlink(SOURCE_PATH . DIRECTORY_SEPARATOR . 'README.md')) {
+    print PHP_EOL;
+    print <<<EOD
+ Unable to remove "README.md" file.
+
+ Please remove default "README.md" and rename "_README.md" to
+ "README.md" manually.
+
+
+EOD;
+    $exitCode = 1;
+}
+
+// rename README.md
+if (!rename(
+    SOURCE_PATH . DIRECTORY_SEPARATOR . '_README.md',
+    SOURCE_PATH . DIRECTORY_SEPARATOR . 'README.md')
+) {
+    print PHP_EOL;
+    print <<<EOD
+ Unable to rename "_README.md" file to "README.md".
+
+ Please rename "_README.md" file to "README.md" manually.
+
+
+EOD;
+    $exitCode = 1;
+}
 
 // rename netbeans project folder
 if (!rename(
-    SOURCE_PATH . DIRECTORY_SEPARATOR . '_nbproject', 
+    SOURCE_PATH . DIRECTORY_SEPARATOR . '_nbproject',
     SOURCE_PATH . DIRECTORY_SEPARATOR . 'nbproject')
 ) {
     print PHP_EOL;
     print <<<EOD
- Unable to rename "_nbproject" directory to "nbproject". 
- 
+ Unable to rename "_nbproject" directory to "nbproject".
+
  Please rename "_nbproject" directory to "nbproject" manually.
 
 
@@ -196,10 +225,10 @@ print PHP_EOL;
 $junks = [
     __DIR__ . DIRECTORY_SEPARATOR . 'init',
     SOURCE_PATH . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . '.gitkeep',
-    SOURCE_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'Fixture' 
-        . DIRECTORY_SEPARATOR .  '.gitkeep',
-    SOURCE_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'unit' 
-        . DIRECTORY_SEPARATOR .  '.gitkeep'
+    SOURCE_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'Fixture'
+        . DIRECTORY_SEPARATOR . '.gitkeep',
+    SOURCE_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'unit'
+        . DIRECTORY_SEPARATOR . '.gitkeep'
 ];
 foreach ($junks as $junk) {
     if (!unlink($junk)) {
