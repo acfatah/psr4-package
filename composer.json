@@ -1,0 +1,20 @@
+{
+    "name": "acfatah/psr4-package",
+    "description": "PSR-4 PHP Package Boilerplate.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Achmad F. Ibrahim",
+            "email": "acfatah@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "scripts": {
+        "post-create-project-cmd" : [
+            "bin/init"
+        ]
+    }
+}
