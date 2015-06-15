@@ -78,7 +78,7 @@ class Install
             ],
             '{{HOMEPAGE}}' => [
                 'Project homepage.',
-                'http://github.com/acfatah'
+                'https://github.com/acfatah'
             ],
             '{{NAMESPACE}}' => [
                 'Project namespace. E.g "Acfatah\Package"',
