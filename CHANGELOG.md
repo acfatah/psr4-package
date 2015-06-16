@@ -1,3 +1,3 @@
-1.0.0 ({{DATE}})
-------------------
+dev-master ({{DATE}})
+---------------------
 * Initial development
