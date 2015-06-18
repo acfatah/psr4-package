@@ -116,7 +116,9 @@ class Install
             SOURCE_PATH . DIRECTORY_SEPARATOR . '_README.md'
                 => SOURCE_PATH . DIRECTORY_SEPARATOR . 'README.md',
             SOURCE_PATH . DIRECTORY_SEPARATOR . '_nbproject'
-                => SOURCE_PATH . DIRECTORY_SEPARATOR . 'nbproject'
+                => SOURCE_PATH . DIRECTORY_SEPARATOR . 'nbproject',
+            SOURCE_PATH . DIRECTORY_SEPARATOR . '_travis.yml'
+                => SOURCE_PATH . DIRECTORY_SEPARATOR . '.travis.yml'
         ];
     }
 
