@@ -4,7 +4,6 @@
  * PSR-4 Package installer class.
  *
  * @author Achmad F. Ibrahim <acfatah@gmail.com>
- * @version 1.0.0-dev
  */
 class Install
 {
@@ -44,7 +43,6 @@ class Install
     public static function init()
     {
         ini_set('memory_limit', '512M');
-        define('SOURCE_PATH', realpath(__DIR__ . '/..'));
         self::$metadata = [
             // 'keywords' => [ 'description', 'default']
             '{{PROJECT_NAME}}' => [
@@ -101,27 +99,9 @@ class Install
                 date('Y')
             ]
         ];
-        self::$removedFiles = [
-            SOURCE_PATH . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'init',
-            SOURCE_PATH . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR . 'Install.php',
-            SOURCE_PATH . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . '.gitkeep',
-            SOURCE_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'Fixture'
-                . DIRECTORY_SEPARATOR . '.gitkeep',
-            SOURCE_PATH . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR . 'unit'
-                . DIRECTORY_SEPARATOR . '.gitkeep'
-        ];
-        self::$renamedFiles = [
-            SOURCE_PATH . DIRECTORY_SEPARATOR . '_composer.json'
-                => SOURCE_PATH . DIRECTORY_SEPARATOR . 'composer.json',
-            SOURCE_PATH . DIRECTORY_SEPARATOR . '_nbproject'
-                => SOURCE_PATH . DIRECTORY_SEPARATOR . 'nbproject',
-            SOURCE_PATH . DIRECTORY_SEPARATOR . '_phpunit.xml.dist'
-                => SOURCE_PATH . DIRECTORY_SEPARATOR . 'phpunit.xml.dist',
-            SOURCE_PATH . DIRECTORY_SEPARATOR . '_README.md'
-                => SOURCE_PATH . DIRECTORY_SEPARATOR . 'README.md',
-            SOURCE_PATH . DIRECTORY_SEPARATOR . '_travis.yml'
-                => SOURCE_PATH . DIRECTORY_SEPARATOR . '.travis.yml'
-        ];
+        $files = require __DIR__ . '/files.php';
+        self::$removedFiles = $files['remove'];
+        self::$renamedFiles = $files['rename'];
     }
 
     /**
@@ -202,7 +182,7 @@ EOD;
 
         print PHP_EOL;
         print ' Modified ' . count($modified) . ' file(s):' . PHP_EOL;
-        foreach($modified as $value) {
+        foreach ($modified as $value) {
             print '  * ' . $value . PHP_EOL;
         }
     }
@@ -215,22 +195,25 @@ EOD;
         print PHP_EOL;
         $removable = true;
         foreach (self::$removedFiles as $file) {
-            if (@unlink($file)) {
-                print sprintf(' Removed "%s".', self::simpifyPath($file)) . PHP_EOL;
-            } else {
-                print sprintf(' Unable to remove "%s".', self::simpifyPath($file)) . PHP_EOL;
-                $removable = false;
+            if (is_file($file)) {
+                if (@unlink($file)) {
+                    print sprintf(' Removed "%s" file.', self::simpifyPath($file)) . PHP_EOL;
+                } else {
+                    print sprintf(' Unable to remove "%s" file.', self::simpifyPath($file)) . PHP_EOL;
+                    $removable = false;
+                }
+            }
+            if (is_dir($file)) {
+                if (@rmdir($file)) {
+                    print sprintf(' Removed "%s" directory.', self::simpifyPath($file)) . PHP_EOL;
+                } else {
+                    print sprintf(' Unable to remove "%s" directory.', self::simpifyPath($file)) . PHP_EOL;
+                    $removable = false;
+                }
             }
         }
         if (!$removable) {
-            print " Please remove the file(s) manually." . PHP_EOL;
-            self::$exitCode = 1;
-        }
-        $installDir = SOURCE_PATH . DIRECTORY_SEPARATOR . 'install';
-        if (@rmdir($installDir)) {
-            print ' Removed "install" directory.' . PHP_EOL;
-        } else {
-            print ' Unable to remove "install" directory.' . PHP_EOL;
+            print " Please remove the file(s) or director(y|ies) manually." . PHP_EOL;
             self::$exitCode = 1;
         }
     }

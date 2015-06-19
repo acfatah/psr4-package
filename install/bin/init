@@ -6,9 +6,8 @@
  * PSR-4 Package initialization script.
  *
  * @author Achmad F. Ibrahim <acfatah@gmail.com>
- * @version 1.0.0-dev
  */
 
-require realpath(__DIR__ . '/../vendor/autoload.php');
+require __DIR__ . '/../Install.php';
 
 Install::run();
