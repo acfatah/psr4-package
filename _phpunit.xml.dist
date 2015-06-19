@@ -10,7 +10,7 @@
     verbose="true">
     
     <testsuites>
-        <testsuite name="{{PROJECT_NAME}} Testsuite">
+        <testsuite name="all">
             <directory>tests/</directory>
         </testsuite>
     </testsuites>

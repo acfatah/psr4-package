@@ -113,10 +113,12 @@ class Install
         self::$renamedFiles = [
             SOURCE_PATH . DIRECTORY_SEPARATOR . '_composer.json'
                 => SOURCE_PATH . DIRECTORY_SEPARATOR . 'composer.json',
-            SOURCE_PATH . DIRECTORY_SEPARATOR . '_README.md'
-                => SOURCE_PATH . DIRECTORY_SEPARATOR . 'README.md',
             SOURCE_PATH . DIRECTORY_SEPARATOR . '_nbproject'
                 => SOURCE_PATH . DIRECTORY_SEPARATOR . 'nbproject',
+            SOURCE_PATH . DIRECTORY_SEPARATOR . '_phpunit.xml.dist'
+                => SOURCE_PATH . DIRECTORY_SEPARATOR . 'phpunit.xml.dist',
+            SOURCE_PATH . DIRECTORY_SEPARATOR . '_README.md'
+                => SOURCE_PATH . DIRECTORY_SEPARATOR . 'README.md',
             SOURCE_PATH . DIRECTORY_SEPARATOR . '_travis.yml'
                 => SOURCE_PATH . DIRECTORY_SEPARATOR . '.travis.yml'
         ];
