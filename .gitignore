@@ -3,10 +3,10 @@ vendor
 composer.phar
 #composer.lock
 
-
 # phpunit files
 phpunit.phar
 phpunit.xml
+tests/coverage
 
 # netbeans project files
 nbproject
