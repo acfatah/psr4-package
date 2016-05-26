@@ -8,6 +8,6 @@
  * @author Achmad F. Ibrahim <acfatah@gmail.com>
  */
 
-require __DIR__ . '/../Install.php';
+require __DIR__ . '/../src/Install.php';
 
 Install::run();
