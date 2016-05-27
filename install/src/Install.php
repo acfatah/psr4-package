@@ -58,7 +58,7 @@ Metadata keywords are:
 
 $metadata
 
-Press [ENTER] to continue or type "q" to quit: 
+Press [ENTER] to continue or type "q" to quit:
 EOD;
         $handle = fopen('php://stdin', 'r');
         $input = strtolower(trim(fgets($handle)));
@@ -130,7 +130,7 @@ EOD;
             if ($file == __FILE__) {
                 continue;
             }
-            
+
             if (false !== strpos($iterator->getRealPath(), SOURCE_PATH . '/.git')) {
                 continue;
             }
@@ -160,17 +160,8 @@ EOD;
         $removable = true;
         foreach (self::$removedFiles as $file) {
             if (is_dir($file)) {
-                $files = new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator(
-                        $file,
-                        RecursiveDirectoryIterator::SKIP_DOTS
-                    ),
-                    RecursiveIteratorIterator::CHILD_FIRST
-                );
-
-                foreach ($files as $fileinfo) {
-                    $removable = self::remove($fileinfo->getRealPath());
-                }
+                $removable = self::recursiveRemove($file);
+                continue;
             }
             $removable = self::remove($file);
         }
@@ -252,6 +243,26 @@ EOD;
         return false;
     }
 
+    protected static function recursiveRemove($directory)
+    {
+        $result = false;
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(
+                $directory,
+                RecursiveDirectoryIterator::SKIP_DOTS
+            ),
+            RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($files as $fileinfo) {
+            $result = self::remove($fileinfo->getRealPath());
+        }
+
+        $result = self::remove($directory);
+
+        return $result;
+    }
+
     protected static function removeGit()
     {
         $git = SOURCE_PATH . '/.git';
@@ -261,25 +272,13 @@ EOD;
 
         print PHP_EOL;
         print 'Would you like to remove .git directory and initialize a new one? : ';
+
         $handle = fopen('php://stdin', 'r');
         $input = strtolower(trim(fgets($handle)));
         fclose($handle);
 
         if (false !== strpos($input, 'y') || false !== strpos($input, 'Y')) {
-            $files = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator(
-                    $git,
-                    RecursiveDirectoryIterator::SKIP_DOTS
-                ),
-                RecursiveIteratorIterator::CHILD_FIRST
-            );
-
-            foreach ($files as $fileinfo) {
-                self::remove($fileinfo->getRealPath());
-            }
-
-            self::remove($git);
-            
+            self::recursiveRemove($git);
             print PHP_EOL . shell_exec('git init');
         }
     }
