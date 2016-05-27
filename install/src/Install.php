@@ -58,7 +58,7 @@ Metadata keywords are:
 
 $metadata
 
-Press [ENTER] to continue or type "q" to quit:
+Press [ENTER] to continue or type "q" to quit: 
 EOD;
         $handle = fopen('php://stdin', 'r');
         $input = strtolower(trim(fgets($handle)));
