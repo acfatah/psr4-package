@@ -17,8 +17,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^5.3",
-        "phpunit/phpunit-selenium": "^2.0",
-        "squizlabs/php_codesniffer": "^2.5",
         "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
