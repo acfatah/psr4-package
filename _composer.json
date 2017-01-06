@@ -12,6 +12,7 @@
             "role": "developer"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
         "php": ">=5.6"
     },
