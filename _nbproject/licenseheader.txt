@@ -1,13 +1,8 @@
 <#if licenseFirst??>
 ${licenseFirst}
 </#if>
-${licensePrefix}Licensed under The MIT License
-${licensePrefix}For full copyright and license information, please see the LICENSE file.
-${licensePrefix}Redistributions of files must retain the above copyright notice.
-${licensePrefix}
-${licensePrefix}@copyright (c) {{YEAR}}, {{COPYRIGHT}}
-${licensePrefix}@link {{HOMEPAGE}}
 ${licensePrefix}@license http://opensource.org/licenses/mit-license.php The MIT License (MIT)
+${licensePrefix}@link {{HOMEPAGE}}
 <#if licenseLast??>
 ${licenseLast}
 </#if>
