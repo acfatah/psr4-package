@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <phpunit 
-    bootstrap="tests/bootstrap.php" 
+    bootstrap="test/bootstrap.php"
     colors="false"
     convertErrorsToExceptions="true"
     convertNoticesToExceptions="true"
@@ -11,7 +11,7 @@
     
     <testsuites>
         <testsuite name="all">
-            <directory>tests/</directory>
+            <directory>test/</directory>
         </testsuite>
     </testsuites>
     

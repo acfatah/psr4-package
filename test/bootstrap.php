@@ -17,4 +17,4 @@
  */
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
-$loader->addPsr4('Fixture\\', 'tests/Fixture');
+$loader->addPsr4('Fixture\\', 'test/Fixture');
