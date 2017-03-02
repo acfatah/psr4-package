@@ -1,18 +1,10 @@
 <?php
 
 /**
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE file.
- * Redistributions of files must retain the above copyright notice.
+ * Phpunit bootstrap file.
  * 
- * @copyright (c) {{YEAR}}, {{COPYRIGHT}}
- * @link {{HOMEPAGE}}
  * @license http://opensource.org/licenses/mit-license.php The MIT License (MIT)
- */
-
-/**
- * Phpunit bootstrap file
- * 
+ * @link {{HOMEPAGE}}
  * @author {{AUTHOR}} <{{EMAIL}}>
  */
 
