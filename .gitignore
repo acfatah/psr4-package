@@ -6,7 +6,7 @@ composer.phar
 # phpunit files
 phpunit.phar
 phpunit.xml
-tests/coverage
+test/coverage
 
 # netbeans project files
 nbproject
